@@ -45,8 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (index < inputs.length - 1) {
                         inputs[index + 1].focus();
                     }
-                    console.log(index)   // 0 1
-                    console.log(inputs.length - 1) // 19 19
 
                 });
 
@@ -105,7 +103,38 @@ function checkAnswers() {
 
                     let nextRow = row;
                     let nextCol = col;
+                    if (key == "Backspace") {
+                        event.preventDefault();
+                        nextCol = col;
+                        nextRow = row;
+                        target = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                        console.log("TARGETVALa: ", target.value)
+                        if (target.value == "") {
+                            nextCol -= 1
+                            console.log(row, col)
+                            if (nextCol == -1) {
+                                nextCol = 4; 
+                                nextRow -= 1;
+                                if (row - 1 == -1) {
+                                    nextCol = 4;
+                                    nextRow = 4;
+                                }
+                               
+                            }   
+                            console.log("COL: ",nextCol)
+                            console.log("ROW: ", nextRow)
+                            
+                            nextTarget = document.querySelector(`[data-row="${nextRow}"][data-col="${nextCol}"]`);
+                            console.log("this: ",nextTarget.value)
 
+                            nextTarget.focus();
+                        } else {
+                        console.log("TARGETVAL: ", target.value)
+                        target.value = "";
+                        }
+                        console.log("Killed")
+
+                    } else {
                     if (key == "ArrowRight") {
 
                         nextCol += 1
@@ -144,24 +173,14 @@ function checkAnswers() {
                             nextRow = 0; 
                         }   
                     }
+                    console.log(key)
+
                     
                     console.log("NEXTCOL ", nextRow, nextCol)
                     next = document.querySelector(`[data-row="${nextRow}"][data-col="${nextCol}"]`);
                     next.focus();
-                    /*
-                    if (col + 1 == 5) {
-                        if (row + 1 < 5) {
-                        next = document.querySelector(`[data-row="${row +1}"][data-col="${0}"]`);
-                        } else {
-                            next = document.querySelector(`[data-row="${0}"][data-col="${0}"]`);
-
-                        }
-                    } else {
-                        next = document.querySelector(`[data-row="${row}"][data-col="${col + 1}"]`);
-                    }
-                    console.log(next)*/
-                    if (key == "ArrowRight") {
-                        
-                        
-                    }
+                }
+                    
+                    
+                   
 });
