@@ -30,8 +30,8 @@ const hints_column = [
     ["10. Down: Result of traffic"]
 ];
 
-let currRowHint = hints_row[1]
-let currColHint = hints_column[1]
+let currRowHint = hints_row[0]
+let currColHint = hints_column[0]
 
 const solution = [
     ["S", "A", "L", "A", "D"],
@@ -68,8 +68,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 input.dataset.col = colIndex;
 
                 input.addEventListener("click", (event) => {
-                
-                  });
+                    const row = Number(event.target.dataset.row);
+                    const col = Number(event.target.dataset.col);
+
+                    currRowHint = hints_row[row];
+                    currColHint = hints_column[col];
+
+                    updateHint();
+                    updateHighlight(row, col);
+});
 
                 // Moves user to next square with input
                 input.addEventListener("input", () => {
@@ -81,11 +88,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const inputs = document.querySelectorAll("input"); 
                     const index = Array.from(inputs).indexOf(input);
-
-                    if (index < inputs.length - 1) {
+                    inputNum = index
+                    if (index == 24) {
+                        inputs[0].focus();
+                        inputNum = 0;
+                    } else if (index < inputs.length - 1) {
                         inputs[index + 1].focus();
+                        inputNum = index
                     }
-
+                    
+                    row = Math.floor((inputNum+1)/5)
+                    col = (inputNum+1)%5
+                    currRowHint = hints_row[row]
+                    currColHint = hints_column[col]
+                    updateHint()
+                    updateHighlight(row, col)
                 });
 
                
@@ -242,11 +259,12 @@ function checkAnswers() {
 
                     currRowHint = hints_row[nextRow]
                     currColHint = hints_column[nextCol]
-                    updateHint()
                     updateHighlight(nextRow, nextCol)
                     console.log("NEXTCOL ", nextRow, nextCol)
                     next = document.querySelector(`[data-row="${nextRow}"][data-col="${nextCol}"]`);
                     next.focus();
+                    updateHint()
+
                 }
                     
                     
@@ -259,6 +277,7 @@ function updateHint() {
     } else {
         hint = currColHint;
     }
+    console.log(hint)
     hintBox.innerText = hint
 
 }
@@ -292,15 +311,4 @@ function updateHighlight(row, col) {
                             }
                         }
 
-}
-function showRowHint(cell) {
-    const row = cell.dataset.row;
-    console.log("Row hint:", row);
-    // show UI box here
-}
-
-function showColumnHint(cell) {
-    const col = cell.dataset.col;
-    console.log("Column hint:", col);
-    // show UI box here
 }

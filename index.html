@@ -3,31 +3,61 @@
 <head>
     <title>Crossword</title>
     <style>
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(5, 50px);
-            gap: 5px;
-        }
-        
-        .cell {
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 24px;
-        }
+        .wrapper {
+    display: inline-block;
+    padding: 30px;
+    background-color: #4da6ff;   /* blue box */
+    border-radius: 20px;
+}
 
-        .block {
-            background-color: black;
-        }
-    </style>
+/* Keep grid perfectly square */
+
+
+.cell:focus {
+    outline: none;
+}
+#hintBox {
+    padding: 20px 10px 10px 10px;
+}
+.grid input {
+    scroll-margin: 0px;
+}
+/* Cells */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 65px);
+    grid-template-rows: repeat(5, 65px);
+    gap: 2px;
+    background-color: #ccc;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.cell {
+    border: none;
+     font-size: 20px;
+     text-align: center;
+}
+/* Black blocks */
+.block {
+    background-color: black;
+}
+
+html, body {
+    overflow: hidden;
+}
+</style>
 </head>
 <body>
 
 <h1>My Crossword</h1>
 
-<div class="grid" id="grid"></div>
+
+<div class="wrapper">
+    <div class="grid" id="grid"></div>
+    <div id="hintBox"></div>
+</div>
 <button onclick="checkAnswers()">Check Answers</button>
-<div id="hintBox"></div>
+
 <script>
      
 </script>
