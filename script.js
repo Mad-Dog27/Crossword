@@ -1,23 +1,24 @@
 let cheat = false;
 
-
+let currRow = 0;
+let currCol = 0;
 
 const solution = [
-    ["C", "A", "#", "T", "S"],
-    ["D", "#", "O", "G", "S"],
-    ["B", "I", "R", "#", "D"],
-    ["#", "F", "I", "S", "H"],
-    ["L", "I", "#", "O", "N"]
+    ["C", "A", "X", "T", "S"],
+    ["D", "X", "O", "G", "S"],
+    ["B", "I", "R", "X", "D"],
+    ["X", "F", "I", "S", "H"],
+    ["L", "I", "X", "O", "N"]
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const layout = [
-        ["", "", "#", "", ""],
-        ["", "#", "", "", ""],
-        ["", "", "", "#", ""],
-        ["#", "", "", "", ""],
-        ["", "", "#", "", ""]
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""]
     ];
 
     const grid = document.getElementById("grid");
@@ -36,15 +37,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 input.dataset.row = rowIndex;
                 input.dataset.col = colIndex;
 
-                // 👇 ADD THIS BLOCK HERE
+                // Moves user to next square with input
                 input.addEventListener("input", () => {
-                    const inputs = document.querySelectorAll("input");
+                    const inputs = document.querySelectorAll("input"); 
                     const index = Array.from(inputs).indexOf(input);
 
                     if (index < inputs.length - 1) {
                         inputs[index + 1].focus();
                     }
+                    console.log(index)   // 0 1
+                    console.log(inputs.length - 1) // 19 19
+
                 });
+
+               
+                
+                
 
                 grid.appendChild(input);
             }
@@ -84,3 +92,30 @@ function checkAnswers() {
     
 
 }
+
+
+ document.addEventListener("keydown", function(event) {
+                    let current = document.activeElement
+                    key = event.key
+                    const row = Number(current.dataset.row);
+                    const col = Number(current.dataset.col);                    
+                    console.log(row)
+                    console.log(col)
+                    let next = null;
+                    if (col + 1 == 5) {
+                        if (row + 1 < 5) {
+                        next = document.querySelector(`[data-row="${row +1}"][data-col="${0}"]`);
+                        } else {
+                            next = document.querySelector(`[data-row="${0}"][data-col="${0}"]`);
+
+                        }
+                    } else {
+                        console.log("yep")
+                        next = document.querySelector(`[data-row="${row}"][data-col="${col + 1}"]`);
+                    }
+                    console.log(next)
+                    if (key == "ArrowRight") {
+                        
+                        next.focus();
+                    }
+});
