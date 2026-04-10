@@ -130,6 +130,20 @@ function checkAnswers() {
                             }
                         }   
                     }
+                    if (key == "ArrowUp") {
+
+                        nextRow -= 1
+                        if (nextRow == -1) {
+                            nextRow = 4; 
+                        }   
+                    }
+                    if (key == "ArrowDown") {
+
+                        nextRow += 1
+                        if (nextRow == 5) {
+                            nextRow = 0; 
+                        }   
+                    }
                     
                     console.log("NEXTCOL ", nextRow, nextCol)
                     next = document.querySelector(`[data-row="${nextRow}"][data-col="${nextCol}"]`);
