@@ -102,6 +102,39 @@ function checkAnswers() {
                     console.log(row)
                     console.log(col)
                     let next = null;
+
+                    let nextRow = row;
+                    let nextCol = col;
+
+                    if (key == "ArrowRight") {
+
+                        nextCol += 1
+                        if (nextCol == 5) {
+                            nextCol = 0; 
+                            nextRow +=1;
+                            if (row +1 == 5) {
+                                nextCol = 0;
+                                nextRow = 0;
+                            }
+                        }   
+                    }
+                    if (key == "ArrowLeft") {
+
+                        nextCol -= 1
+                        if (nextCol == -1) {
+                            nextCol = 4; 
+                            nextRow -= 1;
+                            if (row - 1 == -1) {
+                                nextCol = 4;
+                                nextRow = 4;
+                            }
+                        }   
+                    }
+                    
+                    console.log("NEXTCOL ", nextRow, nextCol)
+                    next = document.querySelector(`[data-row="${nextRow}"][data-col="${nextCol}"]`);
+                    next.focus();
+                    /*
                     if (col + 1 == 5) {
                         if (row + 1 < 5) {
                         next = document.querySelector(`[data-row="${row +1}"][data-col="${0}"]`);
@@ -110,12 +143,11 @@ function checkAnswers() {
 
                         }
                     } else {
-                        console.log("yep")
                         next = document.querySelector(`[data-row="${row}"][data-col="${col + 1}"]`);
                     }
-                    console.log(next)
+                    console.log(next)*/
                     if (key == "ArrowRight") {
                         
-                        next.focus();
+                        
                     }
 });
