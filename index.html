@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crossword</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            gap: 5px;
+        }
+        
+        .cell {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .block {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+
+<h1>My Crossword</h1>
+
+<div class="grid" id="grid"></div>
+<button onclick="checkAnswers()">Check Answers</button>
+<script>
+     
+</script>
+
+
+<script src="script.js"></script>
+</body>
+</html>
