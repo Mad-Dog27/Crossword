@@ -1,14 +1,44 @@
+const hintBox = document.getElementById("hintBox");
+hintBox.innerText = "your hint here";
+hintBox.style.display = "block";
 let cheat = false;
-
+let lastClickTime = 0;
+let clickTimeout;
+let rowToggle = false;
 let currRow = 0;
 let currCol = 0;
 
+
+let counta = 0;
+let countb = 0;
+let prevrow = 0;
+let prevcol = 0;
+
+
+const hints_row = [
+    ["1. Across: A healthy lunch"],
+    ["2. Across: ____ a river"],
+    ["3. Across: Out of town"],
+    ["4. Across: Spanish party island"],
+    ["5. Across: Actress _____ Cruthid"]
+];
+const hints_column = [
+    ["6. Down: Thin stage fabric"],
+    ["7. Down: Dutch caribbean get-away"],
+    ["8. Down: Song text"],
+    ["9. Down: Astound"],
+    ["10. Down: Result of traffic"]
+];
+
+let currRowHint = hints_row[1]
+let currColHint = hints_column[1]
+
 const solution = [
-    ["C", "A", "X", "T", "S"],
-    ["D", "X", "O", "G", "S"],
-    ["B", "I", "R", "X", "D"],
-    ["X", "F", "I", "S", "H"],
-    ["L", "I", "X", "O", "N"]
+    ["S", "A", "L", "A", "D"],
+    ["C", "R", "Y", "M", "E"],
+    ["R", "U", "R", "A", "L"],
+    ["I", "B", "I", "Z", "A"],
+    ["M", "A", "C", "E", "Y"]
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -37,8 +67,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 input.dataset.row = rowIndex;
                 input.dataset.col = colIndex;
 
+                input.addEventListener("click", (event) => {
+                
+                  });
+
                 // Moves user to next square with input
                 input.addEventListener("input", () => {
+                    
+                    if (input.value === " ") {
+                            input.value = "";
+                            return;
+                    }
+
                     const inputs = document.querySelectorAll("input"); 
                     const index = Array.from(inputs).indexOf(input);
 
@@ -74,7 +114,9 @@ function checkAnswers() {
         if (user === correct) {
             input.style.backgroundColor = "lightgreen";
         } else {
+            if (user != ""){
             input.style.backgroundColor = "salmon";
+            }
         }
     });
     } else {
@@ -100,7 +142,7 @@ function checkAnswers() {
                     console.log(row)
                     console.log(col)
                     let next = null;
-
+                    console.log(key)
                     let nextRow = row;
                     let nextCol = col;
                     if (key == "Backspace") {
@@ -133,6 +175,29 @@ function checkAnswers() {
                         target.value = "";
                         }
                         console.log("Killed")
+
+                    } else if (key == " ") {
+
+
+
+                        event.preventDefault();
+                        console.log(row, col)
+                        rowToggle = !rowToggle
+                     
+                        console.log(hints_row)
+                        updateHint();
+                        updateHighlight(nextRow, nextCol)
+
+                        
+                        const inputs = document.querySelectorAll("input");
+                        if (cheat) {
+                        inputs.forEach(input => {
+                            const row = input.dataset.row;
+                            const col = input.dataset.col;
+                        })}
+
+
+
 
                     } else {
                     if (key == "ArrowRight") {
@@ -175,7 +240,10 @@ function checkAnswers() {
                     }
                     console.log(key)
 
-                    
+                    currRowHint = hints_row[nextRow]
+                    currColHint = hints_column[nextCol]
+                    updateHint()
+                    updateHighlight(nextRow, nextCol)
                     console.log("NEXTCOL ", nextRow, nextCol)
                     next = document.querySelector(`[data-row="${nextRow}"][data-col="${nextCol}"]`);
                     next.focus();
@@ -184,3 +252,55 @@ function checkAnswers() {
                     
                    
 });
+
+function updateHint() {
+    if (rowToggle) {
+        hint = currRowHint;
+    } else {
+        hint = currColHint;
+    }
+    hintBox.innerText = hint
+
+}
+
+function updateHighlight(row, col) {
+    for (let i = 0; i <= 4; i++) {
+                            if (counta >= 1) {
+                                const tile = document.querySelector(`[data-row="${prevrow}"][data-col="${i}"]`);
+                                tile.style.backgroundColor = "white";
+                                if (i == 4) {counta = 0;}
+                            }
+                            if  (countb >= 1) {
+                                const tile = document.querySelector(`[data-row="${i}"][data-col="${prevcol}"]`);
+                                tile.style.backgroundColor = "white";
+                                if (i == 4) {countb = 0;}
+                            }
+                        }
+
+                        for (let i = 0; i <= 4; i++) {
+                            
+                            if (rowToggle) {
+                            const tile = document.querySelector(`[data-row="${row}"][data-col="${i}"]`);
+                            tile.style.backgroundColor = "yellow";
+                            counta++;
+                            prevrow = row;
+                            } else {
+                            const tile = document.querySelector(`[data-row="${i}"][data-col="${col}"]`);
+                            tile.style.backgroundColor = "yellow"; 
+                            countb++;
+                            prevcol = col;
+                            }
+                        }
+
+}
+function showRowHint(cell) {
+    const row = cell.dataset.row;
+    console.log("Row hint:", row);
+    // show UI box here
+}
+
+function showColumnHint(cell) {
+    const col = cell.dataset.col;
+    console.log("Column hint:", col);
+    // show UI box here
+}
